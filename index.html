@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PDX Movers — C.O.R.E. Training Assessment</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@4.2.1/dist/jspdf.umd.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap');
 
@@ -1307,6 +1307,12 @@ async function confirmSubmit() {
   statusEl.className   = 'submit-status sending';
   statusEl.textContent = '⏳ Generating PDF report...';
 
+  if (!window.jspdf) {
+    statusEl.className   = 'submit-status error';
+    statusEl.textContent = '⚠ PDF library failed to load. Please refresh the page and try again.';
+    btn.disabled = false;
+    return;
+  }
   const pdfBase64  = generatePDF(name, date);
   const pdfFilename = `CORE_Assessment_${name.replace(/\s+/g,'_')}_${date.replace(/,/g,'').replace(/\s+/g,'_')}.pdf`;
   const payload = {
