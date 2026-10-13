@@ -546,6 +546,23 @@
   .submit-status.sending { border-color: var(--yellow); color: var(--yellow); display: block; }
   .submit-status.success { border-color: var(--green); color: var(--green); display: block; }
   .submit-status.error { border-color: var(--red); color: var(--red); display: block; }
+
+  /* ── OFFLINE BANNER ── */
+  .offline-banner {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--yellow);
+    background: rgba(245,158,11,0.08);
+    border: 1px solid rgba(245,158,11,0.25);
+    padding: 5px 12px;
+    white-space: nowrap;
+  }
+  .offline-banner.visible { display: flex; }
 </style>
 </head>
 <body>
@@ -566,6 +583,7 @@
     <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
   </div>
   <div class="header-right" id="header-module-name"></div>
+  <div class="offline-banner" id="offline-banner">⚡ Offline — Using cached snapshot from <span id="offline-date"></span></div>
 </header>
 
 <!-- LANDING -->
@@ -656,7 +674,8 @@
 // ═══════════════════════════════════════════════
 //  DATA: All modules with questions & answer keys
 // ═══════════════════════════════════════════════
-const MODULES = [
+/* FALLBACK_START */
+const FALLBACK_MODULES = [
   {
     id: 'cs',
     name: 'Customer Service, Leadership & Crew Mgmt',
@@ -844,7 +863,7 @@ const MODULES = [
     ]
   },
   {
-    id: 'in',
+    id: 'inv',
     name: 'Inventory',
     short: 'Inventory',
     questions: [
@@ -925,6 +944,10 @@ const MODULES = [
     ]
   },
 ];
+const FALLBACK_TIMESTAMP = new Date().toISOString().slice(0,10);
+/* FALLBACK_END */
+
+let MODULES = [];
 
 // ═══════════════════════════════════════════════
 //  STATE
@@ -1270,9 +1293,77 @@ function restartToLanding() {
 // ═══════════════════════════════════════════════
 //  APPS SCRIPT CONFIG  ← Fill in your URL
 // ═══════════════════════════════════════════════
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzunGmVAve_qW1-KSxB5_6MwaACmvTCOFqzKN0meYMTPfQwRJcH9DHyIdH1Vs2famWOYA/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/a/macros/pdxmovers.com/s/AKfycbzwluSkyXvFvbXfs23RCRB4UeQfd4u38BdIwmpJmDohaMMXFnjpilWRLcPZU1XNkBrf/exec';
 // Paste your Web App URL here after deploying the Apps Script.
 // It looks like: https://script.google.com/macros/s/XXXXXXXXXX/exec
+
+// ═══════════════════════════════════════════════
+//  LOAD QUESTIONS (live fetch → fallback)
+// ═══════════════════════════════════════════════
+async function loadQuestions() {
+  // 1. Try sessionStorage cache first
+  try {
+    const cached = sessionStorage.getItem('core_questions');
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      if (parsed && parsed.data && Array.isArray(parsed.data) && parsed.data.length > 0) {
+        MODULES = parsed.data;
+        return;
+      }
+    }
+  } catch(_) {}
+
+  // 2. Try live fetch with 5-second timeout
+  try {
+    const fetchPromise = fetch(APPS_SCRIPT_URL + '?action=getContent', { method: 'GET' });
+    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 5000));
+    const response = await Promise.race([fetchPromise, timeoutPromise]);
+    if (response.ok) {
+      const json = await response.json();
+      if (json.status === 'ok' && json.modules) {
+        // Convert API format to MODULES array, preserving FALLBACK_MODULES order
+        const built = [];
+        FALLBACK_MODULES.forEach(fb => {
+          const apiMod = json.modules[fb.id];
+          if (apiMod && Array.isArray(apiMod.questions) && apiMod.questions.length > 0) {
+            built.push({
+              id: fb.id,
+              name: apiMod.name || fb.name,
+              short: apiMod.short || fb.short,
+              questions: apiMod.questions.map(q => ({
+                q: q.q,
+                type: q.type,
+                opts: q.opts || [],
+                ans: q.ans || []
+              }))
+            });
+          } else {
+            built.push(fb);
+          }
+        });
+        MODULES = built;
+        // Cache in sessionStorage
+        try {
+          sessionStorage.setItem('core_questions', JSON.stringify({ data: MODULES, fetched_at: json.fetched_at || new Date().toISOString() }));
+        } catch(_) {}
+        return;
+      }
+    }
+  } catch(_) {}
+
+  // 3. Fallback to static snapshot
+  MODULES = FALLBACK_MODULES.map(m => Object.assign({}, m));
+  showOfflineBanner();
+}
+
+function showOfflineBanner() {
+  const banner = document.getElementById('offline-banner');
+  const dateEl = document.getElementById('offline-date');
+  if (banner) {
+    if (dateEl) dateEl.textContent = FALLBACK_TIMESTAMP;
+    banner.classList.add('visible');
+  }
+}
 
 // ═══════════════════════════════════════════════
 //  SUBMIT MODAL
@@ -1687,7 +1778,7 @@ function generatePDF(employeeName, assessmentDate) {
 // ═══════════════════════════════════════════════
 //  INIT
 // ═══════════════════════════════════════════════
-buildLanding();
+(async () => { await loadQuestions(); buildLanding(); })();
 </script>
 </body>
 </html>
