@@ -1948,14 +1948,16 @@ function adminAddQuestion() {
 
 async function adminPublish() {
   if (!confirm('Push all current Sheet data to the live site?')) return;
+  const pw = prompt('Enter admin password:');
+  if (!pw) return;
   setAdminStatus('Publishing…');
   try {
-    const resp = await fetch(APPS_SCRIPT_URL + '?action=syncFallback', { method: 'GET' });
+    const resp = await fetch(APPS_SCRIPT_URL + '?action=syncFallback&pw=' + encodeURIComponent(pw), { method: 'GET' });
     const json = await resp.json();
     if (json.status === 'ok') {
       setAdminStatus('Published ✓ — live in ~60 seconds');
     } else {
-      setAdminStatus('Publish failed: ' + (json.error || 'unknown'), true);
+      setAdminStatus('Publish failed: ' + (json.error || json.message || 'unknown'), true);
     }
   } catch(e) {
     setAdminStatus('Network error — ' + e.message, true);
