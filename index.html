@@ -840,8 +840,7 @@
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
         <label style="font-size:13px;color:var(--muted)">Module:</label>
         <select class="admin-module-select" id="admin-mod-sel" onchange="renderAdminModule()"></select>
-        <button class="btn btn-outline" style="font-size:12px;padding:6px 14px" onclick="adminAddQuestion()">+ Add Question</button> 
-        <button class="btn btn-outline" style="font-size:12px;padding:6px 14px;border-color:var(--green);color:var(--green)" onclick="adminPublish()">🚀 Publish to Live</button>
+        <button class="btn btn-outline" style="font-size:12px;padding:6px 14px" onclick="adminAddQuestion()">+ Add Question</button>
       </div>
       <div id="admin-q-list"></div>
       <div id="admin-edit-form" style="display:none"></div>
@@ -919,8 +918,276 @@
 //  DATA: All modules with questions & answer keys
 // ═══════════════════════════════════════════════
 /* FALLBACK_START */
-const FALLBACK_MODULES = [];
-const FALLBACK_TIMESTAMP = '2026-10-14';
+const FALLBACK_MODULES = [
+  {
+    id: 'cs',
+    name: 'Customer Service, Leadership & Crew Mgmt',
+    short: 'Customer Service',
+    questions: [
+      { q: "What do you do when the customer doesn't want to pay their bill?", type:'single', opts:["110% Rule — Explain the customer is contractually obligated to pay 110% of Estimate Total and the remainder will be negotiated with our Claims Team.","Tell the customer, \"Don't worry about it, we'll handle it later when the office contacts you.\"","Only charge the customer for the estimated time.","Have an in depth conversation with the customer about why they need to pay their bill and the repercussions if they dont."], ans:['A'] },
+      { q: "What do you do if the customer doesn't want you to wrap everything?", type:'single', opts:["Tell the customer that goes against our company policy and is unacceptable.","Wrap everything anyways, we dont break policy.","Get a damage waiver clearly describing what is not to be wrapped releasing PDX Movers from liabilities.","Drape and go!"], ans:['C'] },
+      { q: "What do you do if the customer wants to leave during the move?", type:'multi', opts:["Be sure to have a good phone number in case you need to contact them for anything.","Tell the customer that's fine and they dont need to be there.","Notify your MC that your customer needs to leave during the move.","There is no rule on this."], ans:['A','C'] },
+      { q: "What should you do if you and your crew are going to take a lunch break?", type:'single', opts:["Notify your customer that you and your crew are going to take a lunch break.","Punch out for your 30 minute lunch break on the Workforce app.","Make sure that your 30 minute break matches the 30 minute break you enter into SuperMove.","All of the above."], ans:['D'] },
+      { q: "What do you do if the customer wants you to move items that aren't on your inventory?", type:'single', opts:["It's a set price, this is not a worry at PDX Movers!","Do it anyways! We're hourly!","Tell the customer that wasn't part of the original plan and it's not a very good idea.","Get a change order form filled out based on the significance of the changes to our original scope."], ans:['D'] },
+      { q: "What do you do if your customer isn't prepared for the move?", type:'single', opts:["Panic, and let your behavior contribute to the crew's morale.","Confirm the customer isn't packed and ready, ask what they expect from our crew, and then call the office.","Doesn't matter, we come prepared for anything!","If your customer isn't prepared then we will not be completing the move."], ans:['B'] },
+      { q: "What do you do if you need to report an injury?", type:'single', opts:["Call Mike directly.","Tell nobody.","Call the field support line, and have them reach out to HR asap.","Call Billy."], ans:['C'] },
+      { q: "What do you do if a member of your crew has poor hygiene?", type:'single', opts:["Send a red sheet to HR.","Address the situation privately with the employee.","Mention it to the Operations staff before you leave the warehouse.","Any of the above."], ans:['D'] },
+      { q: "What do you do if your customer wants you to dispose of some items?", type:'multi', opts:["If the items were detailed in the job notes, then we charge a $75 dispo fee per item(s).","We do not dispose of items for customers.","If they were undisclosed prior to arriving, tell them, \"Most likely but we'll need to call our office to confirm pricing based on what we will have to dispose of and it's typically a $75 per item disposal fee.\"","Leave the customer's disposal items on the dock upon arriving back at the warehouse."], ans:['A','C'] },
+      { q: "What do we classify as hazardous or unhealthy working conditions on a jobsite?", type:'single', opts:["Animal feces or urine on furniture, boxes, or walls, or mold in the house.","Dirty, unswept floors.","Wall to wall boxes and furniture.","Dog hair everywhere."], ans:['A'] },
+      { q: "What should you do if you show up to a house that is unhealthy or there are hazardous conditions?", type:'single', opts:["Do the job, that's what we are paid to do.","Pull the crew and take a picture of the issue, then reach out to the office immediately, BEFORE YOU START THE JOB.","Wear masks and gloves and get \"R\" done.","Get the poopy items on and off the truck as quickly as possible."], ans:['B'] },
+      { q: "What do you do if you find yourself in a situation where members of your crew aren't getting along?", type:'single', opts:["Ask them to settle their difference outside.","Assess the issue and speak up. You may need to pull the crew members individually and ask they stop the behavior.","Call the office immediately.","Call the police immediately."], ans:['B'] },
+      { q: "What do you do if members of your crew start acting inappropriately?", type:'single', opts:["Tell the customer.","Make sure to address the situation with the crew members immediately.","Get in the truck and call the office.","Tell your crew to go sit in the truck and call management."], ans:['B'] },
+      { q: "What do you do if you experience a truck issue that is out of your control?", type:'single', opts:["Call a tow truck.","Call emergency services.","Call the Field Support Line.","Wait for someone to reach out to you."], ans:['C'] },
+      { q: "What do you do if you are scheduled to \"shadow\" another lead on a job?", type:'single', opts:["Learn and understand paperwork when your assigned lead meets with the customer.","Watch how your lead interacts with the crew.","Learn problem solving skills from your leads.","All of the above."], ans:['D'] },
+      { q: "What do you do if you are scheduled to be \"observed\" by another lead on a job?", type:'single', opts:["Stick to just loading the truck.","Watch and learn as the other lead runs the job.","Observe means you only need to run the crew.","Run the job. Have the observing lead check your paperwork, job process, and ability to run your crew."], ans:['D'] },
+      { q: "What is the most appropriate response for when a customer asks you a question that you are unsure of what the answer is?", type:'single', opts:["Give the customer the answer you \"think\" they want to hear.","I don't know, but I'm sure someone on the crew does.","The answer is in the contract you signed.","That is a great question, let me call the office and get a for sure answer for you!"], ans:['D'] },
+      { q: "What should you do if you get to a job and realize you forgot materials?", type:'single', opts:["Just wing it.","Go to nearest Pioneer Packing and buy some with your debit card.","Call a member of Operations team personally on their direct phone line.","Call \"Field Support Line\" (FSL) and follow the instructions."], ans:['D'] },
+      { q: "What is the customer paying for in a \"Package Move?\"", type:'single', opts:["They are paying for a requested amount of labor and truck hours.","They are paying for us for a multi day move.","They are paying for an indefinite time allowance.","They are paying for a binding amount of time."], ans:['D'] },
+      { q: "What should you do if a member of your crew did not come to work in uniform?", type:'single', opts:["Give them a spare from your backpack.","Don't worry about it, it's not that important.","Ask one of the \"Operations Supervisor(s) before you leave the warehouse.","Dig through the \"lost and found\"."], ans:['C'] },
+      { q: "Why is it important not to overreact to a stressful situation when we are in the field?", type:'single', opts:["You risk demoralizing your crew.","Your stress will bleed into the crew and will make your job harder.","It could cause a bad impression to your customer, adding difficulty to the job.","All of the above."], ans:['D'] },
+      { q: "What should you do if you show up to a job and the job \"appears\" to be out of scope?", type:'single', opts:["Get all the facts before calling the office to explain the \"Scope Change.\"","Immediately call the office.","Complain to the customer about how \"the office messed this one up.\"","Explain to the customer that this is what happens when we don't receive all of the details over the phone."], ans:['A'] },
+      { q: "Why is \"follow up\" on assigned tasks important when working in the field or warehouse?", type:'single', opts:["For training, quality assurance, and accountability as well as determining a teammate's pace.","To make sure your crew knows who is in charge of the job.","There is no need for follow up, you should trust your crew.","There are few oversights in the field so this is not necessary."], ans:['A'] },
+      { q: "What do you do if a member of your crew is not on time for work?", type:'single', opts:["Express your annoyance to your crew showing that we don't appreciate late or tardiness.","Leave anyways, but let Walker or Brandon know to have them just stay home.","Wait patiently on the dock by the truck until all your crew is there and ready to load daily supplies.","Inform a member of operations immediately to receive further instructions."], ans:['D'] },
+      { q: "Communication is key to a successful \"Package Job\". What should be communicated?", type:'single', opts:["Prioritization of items to be moved, and the time we will need to head to destination for the unload.","The time we are there for the customer.","Areas of concern that could potentially send the job over the \"Package Job\" time allotment.","All of the above."], ans:['D'] },
+    ]
+  },
+  {
+    id: 'da',
+    name: 'Disassembly & Assembly',
+    short: 'D&A',
+    questions: [
+      { q: "What is the first thing that PDX Movers policy requires us to do before disassembling Ikea furniture?", type:'single', opts:["Get a damage waiver signed.","Immediately start taking it apart because it takes an extra long amount of time.","Take pictures of the item.","Call for help."], ans:['A'] },
+      { q: "Is it good practice to take photos of furniture before disassembling it?", type:'single', opts:["Yes.","No."], ans:['A'] },
+      { q: "We will disassemble a crib, but will not reassemble. True or False?", type:'single', opts:["True","False"], ans:['A'] },
+      { q: "Prior to disassembling furniture, what should you have prepped and ready?", type:'single', opts:["An empty truck.","A Parts Box.","A full truck.","A mirror pack ready to put parts in."], ans:['B'] },
+      { q: "What is the first step in disassembling a bed?", type:'single', opts:["Removing and bagging the mattress.","Unhooking the side rails.","Dismantling the head and foot board.","Removing the bed slats."], ans:['A'] },
+      { q: "When disassembling a TV, what must you do?", type:'single', opts:["Shrink wrap the screen first.","Wrap the screen in cardboard first.","Remove the TV stand, legs, or mount from the back of the TV.","Wrap the TV. No reason to disassemble."], ans:['C'] },
+      { q: "How long should it take on average to disassemble an item?", type:'single', opts:["5 minutes.","15 minutes.","25 minutes.","1 hour."], ans:['B'] },
+      { q: "Where should the screws, nuts, and bolts go from any disassembled item?", type:'single', opts:["Tape them to the disassembled item.","Screw them back into the piece.","PARTS BOX.","The nearest drawer to where the piece was originally at origin."], ans:['C'] },
+      { q: "Which tool should be used to loosen the \"cam locks\" on an Ikea bed frame?", type:'single', opts:["The appropriately sized allen key.","Star or \"Torx\" Bit in an impact drill.","Any size allen wrench.","A screwdriver."], ans:['A'] },
+      { q: "Adjustable Base bed frames have pieces that come off. What should be removed prior to moving the bed frame?", type:'single', opts:["The legs and mattress supports.","The motor.","All the wiring.","The air pump."], ans:['A'] },
+      { q: "What should we NOT remove on an adjustable bed?", type:'single', opts:["The motor","The wiring","The pistons and metal framework underneath.","All of the above."], ans:['D'] },
+      { q: "After you disassemble an adjustable bed frame, what is the next step in the process?", type:'single', opts:["Remove the legs.","Box it up.","Carry it out to the truck.","Blanket, and shrink wrap it tightly to avoid folding."], ans:['D'] },
+      { q: "Sleep number beds have hoses and a box attached to the mattress. How can we ensure that we get the bed assembled correctly later?", type:'single', opts:["Take a picture of the setup prior to disassembling.","Put the hoses, box, and any other parts together in the parts box.","Have the person who disassembled, do the reassembly.","All of the above."], ans:['D'] },
+      { q: "What is the first step in disassembling small garage metal racking?", type:'single', opts:["Remove the support cross beams.","Remove the small clips.","Ask the customer if they really need to be disassembled.","Remove any items on the shelves, take a picture, and then remove the shelves."], ans:['D'] },
+      { q: "What are the first steps in disassembling industrial orange racking?", type:'single', opts:["Take pictures of the shelves vertical spacing, remove the shelf grating, and then remove the locking pins.","Remove the cross beams.","Unbolt the bolts attaching the large uprights together.","There is no particular order to this process."], ans:['A'] },
+      { q: "Which tool should you use to dislodge metal racking?", type:'single', opts:["Hammer.","Mallet.","Elbow.","Bottom of any solid tool."], ans:['B'] },
+      { q: "What should always be removed prior to moving a dining table?", type:'single', opts:["Any leafs inside and the table legs.","Any and all screws you can find.","Just enough table legs to get the item out the door.","We rarely need to take the legs off tables. They are great to stack on!!"], ans:['A'] },
+      { q: "What should always be removed from a grandfather clock prior to moving?", type:'single', opts:["Pendulum and chimes.","Crown and batteries (if applicable)","Any loose glass or shelves (if applicable)","All of the above."], ans:['D'] },
+      { q: "Which tool should be used to remove the screws from the upright supports holding up the mirror on the dresser?", type:'single', opts:["Impact power drill with the appropriate bit.","Appropriate sized screwdriver.","Pliers.","We don't actually need to remove these."], ans:['B'] },
+      { q: "What should always be removed from a bookcase or entertainment center prior to moving?", type:'single', opts:["Shelves.","Dowels.","Any contents on the shelves or drawers.","All of the above."], ans:['D'] },
+      { q: "When handling a Peloton Exercise Bike, what MUST be removed and packaged up prior to moving?", type:'single', opts:["The seat.","The pedals.","Drink holder.","The screen."], ans:['D'] },
+      { q: "Which tool should be used to remove the screen from a Peloton Exercise Bike?", type:'single', opts:["A star or \"Torx\" drill bit that fits.","The exact allen head key that fits.","A wedged flat head screwdriver does the trick.","There's no need to remove the screen."], ans:['B'] },
+      { q: "When disassembling a treadmill, what should be the first piece to be unscrewed and removed?", type:'multi', opts:["The top area of the treadmill (if necessary).","The side leg bolts.","The belt.","The feet."], ans:['A','B'] },
+      { q: "What must you watch out for and disconnect from the top piece of the treadmill?", type:'single', opts:["The electrical connector that runs up one of the pillar arms.","The belt connector.","The power cord coming out the bottom that plugs to the wall.","The drink holder."], ans:['A'] },
+      { q: "What is generally the first step in disassembling a grand piano?", type:'multi', opts:["Remove the top (lid) of the piano and the pedals.","Wrap the top and sides of the piano.","Remove the legs of the piano.","Get the piano on its side and remove the legs."], ans:['A','D'] },
+      { q: "How do you remove the legs from a grand piano? Explain the step by step process.", type:'written', opts:[], ans:[] },
+      { q: "What is the first step in disconnecting a washer and dryer from the wall?", type:'single', opts:["Get a damage waiver signed, then ensure that the water is turned to the off position.","Disconnect the water lines.","Unplug the machines.","Disconnect the dryer vent."], ans:['A'] },
+    ]
+  },
+  {
+    id: 'jt',
+    name: 'Job Types',
+    short: 'Job Types',
+    questions: [
+      { q: "How far are we typically moving people on a \"local\" move?", type:'single', opts:["1-50 miles.","50-100 miles.","100-150 miles.","150-200 miles."], ans:['A'] },
+      { q: "What are we billing for on a local move?", type:'single', opts:["The movers don't deal with billing onsite.","Net weight of the shipment and miles driven.","Flat rate for the job.","Number of trucks and movers per hour, plus materials used."], ans:['D'] },
+      { q: "How far are we typically moving people on an \"Intrastate\" move?", type:'single', opts:["Less than 50 miles.","Over 50 miles but within the same state.","Over 500 miles.","Anywhere across state lines."], ans:['B'] },
+      { q: "What are we billing for on an \"Intrastate\" move?", type:'single', opts:["Only labor hours.","Net weight, miles driven, number of trucks, materials used, some additional services.","Fuel costs.","Materials used and Labor hours."], ans:['B'] },
+      { q: "Where or how far are we typically moving a customer on an \"Interstate Move\"?", type:'single', opts:["Out of state.","Within 50 miles.","Anywhere within the state.","Over 500 but within the state of Oregon."], ans:['A'] },
+      { q: "What are we billing for on \"Interstate Moves\"?", type:'single', opts:["Labor hours and number of trucks.","Only materials and fuel costs.","Fuel costs, heavy items charge, and materials.","Materials, net weight of the shipment, miles driven, and some additional services."], ans:['D'] },
+      { q: "What is the preferred method of payment for all long distance moves?", type:'single', opts:["Cashiers check.","Personal Check.","ACH Payment.","Credit Card."], ans:['C'] },
+      { q: "When doing a \"Storage In\" move, your goal is to load all of the boxes in the cage first. True or False?", type:'single', opts:["True","False"], ans:['B'] },
+      { q: "What are we charging for when billing for a \"Storage In\" move?", type:'single', opts:["Number of pads, materials, labor hours, cages used, and drive time back to the warehouse.","Materials and labor only.","Cages and labor only.","\"Storage in\" is based off weight alone."], ans:['A'] },
+      { q: "When doing a \"Storage Out\" move with multiple cages and only one truck to shuttle, what is your goal?", type:'single', opts:["Manhandle the cage off the truck so the driver can go get another cage.","Go slow to get your hours (one piece at a time).","Unload and send 2 guys back to get a cage.","Quickly unload the first cage without unwrapping furniture to get the driver on their way back for another cage."], ans:['D'] },
+      { q: "When do we start billing for time on a \"Storage Out\" move?", type:'single', opts:["When we arrive on-site and greet the customer.","Once the job is done because it is weight based.","Time starts as soon as you leave the warehouse.","Time starts when you give your \"Pre-Call\" to the customer."], ans:['C'] },
+      { q: "How much do we charge a customer for renting storage blankets?", type:'single', opts:["$50.00 per dozen.","$125.00 for 40 pads.","$1.00 per pad per month in storage.","$75.00 flat rate a month with no pad limit."], ans:['C'] },
+      { q: "When does the time start on a Zippy Shell Load?", type:'single', opts:["When we arrive onsite and turn off the truck.","When the first item is placed on the truck.","When we leave the warehouse.","We don't track time for ZippyShell."], ans:['C'] },
+      { q: "What MUST you do at the very start of a Zippyshell Load?", type:'single', opts:["Initials on the contract.","Call Caitlyn to start the time.","Take a picture of the load after you open the cage.","Critique the load and bash the other company."], ans:['C'] },
+      { q: "The standard on a Zippyshell Load is to paper wrap all of the furniture. True or False?", type:'single', opts:["True","False"], ans:['B'] },
+      { q: "How many items do we disassemble on a \"Zippy Shell Load\" before we call the office for permission to disassemble any more items?", type:'single', opts:["3 items, then call for permission.","2 items, then call for permission.","1 item, then call for permission.","We do not have a limit."], ans:['C'] },
+      { q: "We don't need to use a parts box on a Zippyshell job for only one small disassembled item. True or False?", type:'single', opts:["True","False"], ans:['B'] },
+      { q: "What is the number one most important thing in a commercial job?", type:'single', opts:["Good communication. (The Plan)","Making sure you have pallet jack.","Making sure you leave the warehouse before anyone else.","Starting the time before you leave the warehouse."], ans:['A'] },
+      { q: "Where do the biggest bottlenecks typically tend to happen on commercial moves?", type:'single', opts:["Truck turnaround.","Using an elevator.","Assembly and disassembly of warehouse racking and office cubicles.","All of the above."], ans:['D'] },
+      { q: "What characteristics are crucial to successfully leading any job at PDX Movers?", type:'single', opts:["Professionalism.","Strong work ethic.","Strong Leadership.","All of the above."], ans:['D'] },
+    ]
+  },
+  {
+    id: 'pk',
+    name: 'Packing',
+    short: 'Packing',
+    questions: [
+      { q: "Why do we not allow any of the items on the Hazardous Materials form to be shipped or stored?", type:'written', opts:[], ans:[] },
+      { q: "Where are you required to label the box you are packing?", type:'single', opts:["On the top.","On the bottom.","On the side with the label.","On the blank side."], ans:['C'] },
+      { q: "All items that are small enough to fit in a box, should be packed in a box (when packing for customers). True or False?", type:'single', opts:["True","False"], ans:['A'] },
+      { q: "How would you locate the materials list while using Super Move?", type:'single', opts:["Look in the estimate.","Look at the calendar.","Under the \"see more\" section after opening the app.","Under the \"Billing section\""], ans:['C'] },
+      { q: "All plates, bowls, cups, and stemware should be packed in which direction?", type:'single', opts:["Vertically ↕","Horizontally ↔"], ans:['A'] },
+      { q: "What is the maximum amount of weight that you should pack into a small, medium, or large \"Pioneer\" box?", type:'single', opts:["1-2 lbs.","3-4 lbs.","7-10 lbs.","15-20 lbs."], ans:['D'] },
+      { q: "On average, how many boxes per hour should a mover aim to pack (excluding dish boxes)?", type:'single', opts:["1-2.","3-4.","7-10.","15-20."], ans:['C'] },
+      { q: "What are the 5 labeling requirements for every box packed by PDX Movers?", type:'single', opts:["Customer last name, location, contents, initials, CP stamp.","Packer's name, location, contents, initials, CP stamp.","Customer's first name, location, contents, initials, CP stamp.","All of the above."], ans:['A'] },
+      { q: "What are our packing \"special instructions\" that we write on the boxes?", type:'single', opts:["\"Careful\" and \"handle with care.\"","\"Bottom load only\" and \"indestructible.\"","\"Top load only\" and \"Fragile.\"","\"Broken\" and \"priceless.\""], ans:['C'] },
+      { q: "How many cardboard sheets account for one mirror pack?", type:'single', opts:["2.","4.","6.","8."], ans:['B'] },
+      { q: "What size box should books always be packed in?", type:'single', opts:["Small 1.5 cubic foot cartons.","Medium 3.0 cubic foot cartons.","Large 4.5 cubic foot cartons.","Extra large 6.0 cubic foot cartons."], ans:['A'] },
+      { q: "What should be the first thing you attempt to pack in every room?", type:'single', opts:["Books.","Pots and pans.","Bedding.","Glass."], ans:['A'] },
+      { q: "How many times should you tape across the bottom of a TV box, as well as sealing the edges?", type:'single', opts:["7-8.","2-3.","15-16.","1-2."], ans:['A'] },
+      { q: "The correct way to pack a microwave is to remove the glass tray and the plastic rotator. True or False?", type:'single', opts:["True","False"], ans:['A'] },
+      { q: "Food from the pantry can be packed with cleaning supplies?", type:'single', opts:["Yes.","No."], ans:['B'] },
+      { q: "Liquor and wine can be packed. What condition should it be in prior to packing?", type:'single', opts:["Factory sealed / unopened.","Mostly full.","1/4 full.","Sealed with plastic under the lid."], ans:['A'] },
+      { q: "When packing computer monitors, you should remove the back/stand/mount if possible. True or False?", type:'single', opts:["True","False"], ans:['A'] },
+      { q: "Glass tops should be removed, wrapped in either a moving pad or heavy duty brown paper, and then:", type:'multi', opts:["Wrapped in cardboard","Packed in a mirror pack box","Taped back to the dresser.","Placed in the back seat of the truck for safe keeping."], ans:['A','B'] },
+      { q: "What do you do if you run across money, jewelry, prescription drugs, credit cards, or passports?", type:'single', opts:["Pack it away!","Pack it in extra large boxes so it's harder to misplace.","Don't touch it. Immediately notify your lead or the customer that we unfortunately can't pack it.","Find an extra small box to pack them in."], ans:['C'] },
+      { q: "We CAN move/ship/store ammunition. True or False?", type:'single', opts:["True","False"], ans:['B'] },
+    ]
+  },
+  {
+    id: 'ld',
+    name: 'Loading',
+    short: 'Loading',
+    questions: [
+      { q: "When should the designated loader be chosen for each job?", type:'single', opts:["During the group huddle after the walkthrough","During the morning rush.","At the warehouse.","Halfway through the job."], ans:['A'] },
+      { q: "As a truck loader, what should you be looking for during the walkthrough?", type:'single', opts:["Groups of items that can be loaded together.","High profile pieces.","Top load items.","All of the above."], ans:['D'] },
+      { q: "What is good practice when you load a \"trap\" in the truck?", type:'single', opts:["Leave a note or a strap in a visible place for the unload team.","Load another trap behind a trap.","Don't tell anyone, they should know how to unload.","Load the truck at the end of the truck without a strap."], ans:['A'] },
+      { q: "How often should you utilize a strap in your load?", type:'single', opts:["On any really heavy items that could shift.","Every tier or at least every other tier.","At least 2-3 straps across the back of the load.","All of the above."], ans:['D'] },
+      { q: "You shouldn't load all of the weight of a shipment in the nose of the truck as this can overweigh the front axle. How can we avoid doing this?", type:'single', opts:["Work with the lead and game plan how high you are going to load the truck. Then try to evenly distribute the weight throughout the truck.","Put all the heavy pieces on one wall of the truck.","Load boxes first and heavy items in the middle."], ans:['A'] },
+      { q: "When should we start \"tiering down\" the load?", type:'multi', opts:["The moment you and the lead are 100% confident you don't need to stack high and tight anymore.","When you don't have enough product to fill the rest of the truck.","When you NEED to utilize both trucks due to the job type.","We don't need to \"tier\" down the load. ALWAYS stack high and tight."], ans:['A','B','C'] },
+      { q: "What can we do to make the end of the truck look great when a customer first sees it?", type:'single', opts:["Have the parts box at the end of the truck.","EVERYTHING at the end of the truck is wrapped and stacked neatly.","No trash or recycling visible at the end.","All of the above."], ans:['D'] },
+      { q: "As a loader, what must we do periodically as we load the truck?", type:'single', opts:["Get out of the truck and do walkthroughs to see what is still left in the house to load.","Stand in the back of the truck waiting for the movers to bring you product.","Stay in the back of the truck to avoid rain!","Slide and drag furniture to the front of the load."], ans:['A'] },
+      { q: "As a truck loader, constant \"____\" is crucial to a successful load.", type:'multi', opts:["Communication with the lead.","Communication with the movers.","Communication with the customer.","Communication with the office."], ans:['A','B'] },
+      { q: "When we load the truck, we should not be leaving unsecured gaps in the load. This can lead to shifting which can cause:", type:'single', opts:["The truck to tip over.","Damaged furniture.","Crushed boxes.","All of the above."], ans:['D'] },
+      { q: "What can we use as \"gap\" fillers in our truck loads?", type:'multi', opts:["Pads not being used to protect product.","Scrap cardboard.","Your backpack.","Packing peanuts."], ans:['A','B'] },
+      { q: "What can be a mover's best friend when we stack items in the load to help avoid damage and create safer loading surfaces?", type:'single', opts:["The customer's foam pad.","High value, crushable items.","Scrap cardboard","Brand new mirror packs."], ans:['C'] },
+      { q: "A mattress should be loaded standing upright, against the already loaded items in the truck. True or False?", type:'single', opts:["True","False"], ans:['A'] },
+      { q: "It is safe to load \"mirror packs\" or \"glass packs\" laying down flat. True or False?", type:'single', opts:["True","False"], ans:['B'] },
+      { q: "How high should we stack loads in the truck before we begin tiering them down?", type:'single', opts:["High and tight, left to right.","Head high always.","The highest you can reach upwards.","We don't load high and tight."], ans:['A'] },
+      { q: "If your estimate for a local job is for ~10,000 lbs and you have 2 trucks, should you spend the whole day trying to load everything high and tight into one truck?", type:'single', opts:["Yes","No"], ans:['B'] },
+      { q: "On an Intrastate load, we should try to get the load into the least amount of trucks as possible. True or False?", type:'single', opts:["True","False"], ans:['A'] },
+      { q: "On an Interstate load, we should try our best to make sure the load is split evenly between the trucks the job was bid for. True or False?", type:'single', opts:["True","False"], ans:['A'] },
+      { q: "What is the policy for taking pictures on a Zippy Shell Load?", type:'single', opts:["Take a picture of every tier as you load, or unload the cage.","Take a picture of the back of the load only.","Take a picture of the empty cage only.","You don't need to take pictures on Zippyshell jobs."], ans:['A'] },
+      { q: "When is it acceptable to \"drape\" furniture in a load?", type:'single', opts:["When the customer has signed a damage waiver for furniture to be left unwrapped.","When there is furniture that may need extra protection.","When a piece is brought out to the truck that is not \"fully wrapped\".","All of the above."], ans:['D'] },
+      { q: "It is a BAD habit to walk out to the truck empty handed while loading. True or False?", type:'single', opts:["True","False"], ans:['A'] },
+      { q: "You should always bring something from the truck to the house while unloading. True or False?", type:'single', opts:["True","False"], ans:['A'] },
+      { q: "Why must we make sure not to overload the attic in a truck?", type:'multi', opts:["It can break the attic.","Overloading can cause leaks.","Overloading can cause steering issues while driving the truck.","It can overweight the front axle."], ans:['A','C','D'] },
+      { q: "What are ideal items to load in the truck attic?", type:'single', opts:["Dining chairs, TLO Items, cushions and pillows, mirror packs.","We only load boxes.","Heavy dressers with marble on top.","Exercise equipment."], ans:['A'] },
+    ]
+  },
+  {
+    id: 'pw',
+    name: 'Paperwork',
+    short: 'Paperwork',
+    questions: [
+      { q: "What is the \"Scope of Service\" or \"BOL\"?", type:'single', opts:["It is a legal document and our contract with the customer required for every move to haul goods.","A document where you fill out pre-existing household damage.","A statement against another employee.","A form required to notate the chain of custody on firearms."], ans:['A'] },
+      { q: "When do we get the \"Scope of Service\" signed?", type:'single', opts:["At the end of the job.","Right before we head to destination.","Before we walk into the customer's house.","This is a sales task to complete."], ans:['C'] },
+      { q: "Why do we need to get the \"Scope of Service\" signed?", type:'single', opts:["In order for us to start the move and haul the customer's goods on the road.","To have the customer agree to the plan that was discussed prior to any changes.","It notates the start time of the job.","All of the above."], ans:['D'] },
+      { q: "What is the \"Change Order Form\"?", type:'single', opts:["The red uniform at PDX Movers.","A form required for when changes to the estimate may occur.","Tool Check out form.","An order form for new uniforms."], ans:['B'] },
+      { q: "When should we get a \"Change Order Form\" signed?", type:'single', opts:["When you are about to go over an estimate.","When the customer adds a stop not on your job scope.","As soon as the scope of service changes.","When the customer wants to add some packing.","All of the above."], ans:['E'] },
+      { q: "Why do we need to get a \"Change Order Form\" signed?", type:'single', opts:["Packing/extra stops can cause you to go over estimate.","So we get paid for services rendered.","So the customer is aware of the change in job cost.","All of the above."], ans:['D'] },
+      { q: "What is an inventory form?", type:'multi', opts:["A form for itemizing a customer's belongings.","A cross reference guide for the BINGO Sheet.","A numbered sticker that we place on products.","A form for accounting for the number of pads used on the job."], ans:['A','C'] },
+      { q: "When do we fill out an inventory form?", type:'single', opts:["On storage in and long distance jobs, before any product is wrapped.","After the product has been wrapped and placed in the back of the truck.","At the very end of the job.","When the customer requests one be done."], ans:['A'] },
+      { q: "Why do we fill out inventory forms?", type:'single', opts:["So that one guy on the job has it easier than the rest.","To practice your handwriting skills.","It's a legal document for billing customers.","To protect our company from claims and keep track of customers' belongings."], ans:['D'] },
+      { q: "What is a \"Chain of Custody\" form?", type:'single', opts:["A divorce agreement.","A form to remind you to lock the back of your truck.","A form to track each hand-off of firearm(s) between origin and destination.","A form for tracking entire shipments throughout our warehouse."], ans:['C'] },
+      { q: "When do we get a \"Chain of Custody\" form filled out?", type:'single', opts:["Anytime a customer requests that we move a firearm.","Each time custody of the firearm changes in the move process.","At the beginning of the move is preferable.","All of the above."], ans:['D'] },
+      { q: "Why do we need to fill out a \"Chain of Custody\" form?", type:'single', opts:["In order to keep track of, as well as safely and legally transport firearms.","So we know how much materials we used on the job.","It will keep track of time worked on the job site.","So we know where employees are at."], ans:['A'] },
+      { q: "What is the \"Hazardous Materials\" form?", type:'single', opts:["A disclaimer stating what types of hazardous materials we can take with us.","A form that states what jobs require personal protective equipment.","A form that explains what hazmat requirements are.","A form dictating items that we are not allowed to store in our warehouse or transport on our trucks."], ans:['D'] },
+      { q: "When do we need to get the \"Hazardous Materials\" form signed?", type:'single', opts:["Before we enter the customer residence upon arrival.","After we have loaded the truck.","Once the truck is unloaded.","At the end of the job."], ans:['A'] },
+      { q: "Why do we need to get the \"Hazardous Materials\" form signed?", type:'single', opts:["To inform customers of our policies and protect us from liabilities.","To help us get a bigger tip.","To help us build rapport with hazardous materials companies.","We don't actually need to get this form signed."], ans:['A'] },
+      { q: "What is the \"Storage Load Acknowledgement\" form?", type:'single', opts:["A form for notating household damage.","A form dedicated to firearm transfers.","A credit card information sheet.","A form that notates the number of blankets, cages, and locks used in order to set up a storage account."], ans:['D'] },
+      { q: "When do we need to get the \"Storage Load Acknowledgement\" form signed?", type:'single', opts:["Before we unload at destination.","At the beginning of the job.","This form is optional for customers to sign.","After we are done loading the customer."], ans:['D'] },
+      { q: "Why do we need to get the \"Storage Load Acknowledgement\" form signed?", type:'single', opts:["So we can charge the customer accurately.","To add money to our monthly bonus.","To absolve our company from damages.","To notate which warehouse our customer's belongings are stored in."], ans:['A'] },
+      { q: "What is a \"Damage Waiver\"?", type:'single', opts:["A form granting us free rein to damage whatever we want.","A liability form absolving our company of responsibility for when damage to an item or household may occur.","A form that allows us to deploy unsafe moving techniques.","A form we fill out when a customer needs to dispose of an item."], ans:['B'] },
+      { q: "When do we need to get a \"Damage Waiver\" signed?", type:'single', opts:["When a customer requests we move an item that we cannot guarantee will not sustain damage.","When a customer requests we move anything IKEA, especially when we cannot guarantee reassembly.","When an item is already damaged and is structurally weak.","All of the above."], ans:['D'] },
+      { q: "Why do we need to get a \"Damage Waiver\" signed?", type:'single', opts:["It is company policy to protect ourselves and the company from liabilities.","To deter customers from taking advantage of our moving services.","It makes for good advertising.","We are the only moving company that does this."], ans:['A'] },
+      { q: "What is a \"Walkthrough Form\"?", type:'multi', opts:["It is a form we fill out that records the condition of the house.","It is a form we use to reduce waste onsite.","It is a form we use to enter the house when the customer is not home to remove debris from an unpack.","It is a form that confirms all the customer's items to be moved have been loaded onto the truck."], ans:['A','D'] },
+      { q: "When do we need to get the \"Walkthrough Form\" signed?", type:'single', opts:["At the end of the job.","Once all necessary pieces are disassembled and accounted for, and before the Team leaves the origin site.","Before you show up to the job.","At destination once reassembly is complete."], ans:['B'] },
+      { q: "When do we need to get the \"Walkthrough Forms\" signed throughout the move?", type:'single', opts:["Before you enter the house.","Before and after the load, and before and after the unload.","Sign all 4 walkthroughs at the end of the day.","Walkthrough forms are optional at PDX."], ans:['B'] },
+      { q: "What is a \"Furniture Disassembly Form\"?", type:'single', opts:["To notate pre and post damage to the residence.","To confirm all of the customer's items have been loaded onto the truck.","To confirm all of the customer's items have been unloaded from the truck.","All of the above."], ans:['A'] },
+      { q: "When do we fill out a \"Furniture Disassembly Form\"?", type:'single', opts:["It's a form for notating furniture we have disassembled, whether or not it will need to be reassembled, and the mover that did the disassembly.","A form for keeping track of the materials used on the job.","A form for notating items a customer disassembled themselves.","We don't need a form for disassembled furniture."], ans:['A'] },
+      { q: "Why do we need to get a \"Furniture Disassembly Form\" signed?", type:'single', opts:["To confirm disassembly took place on the job and the location of the parts box is known.","So we can accurately charge for disassembly.","So we can add additional services charge.","All of the above."], ans:['D'] },
+      { q: "What may constitute an additional service charge on a long distance move?", type:'single', opts:["Piano, hot tub, additional stops, undisclosed staircases, and safes.","Standard furniture disassembly.","Load hazardous materials in a customer's car.","All of the above."], ans:['A'] },
+    ]
+  },
+  {
+    id: 'inv',
+    name: 'Inventory',
+    short: 'Inventory',
+    questions: [
+      { q: "What is the first step when filling out an inventory form on a job?", type:'single', opts:["Fill out the top section: Name, address, page number, BOL if applicable.","Fill in the first line on the inventory.","Start tagging items with an inventory sticker."], ans:['A'] },
+      { q: "What should be the first item listed on your inventory sheet?", type:'single', opts:["Product of highest value in the home.","The piano.","Parts box."], ans:['C'] },
+      { q: "Once you've recorded the \"first item\" in your inventory, what should you start inventorying next?", type:'single', opts:["Boxes","Furniture.","Garage or patio items.","The family pet."], ans:['A'] },
+      { q: "Where should the numbered inventory stickers be placed on the box?", type:'single', opts:["On top.","On bottom.","Any side of the box.","Front of the box specifically outlined for inventory stickers, or nearest the written label. NOT ANYWHERE ELSE."], ans:['D'] },
+      { q: "Where do you place the inventory sticker on furniture?", type:'single', opts:["On the most visible face of the furniture to the customer.","On the back, side, or underneath directly touching the furniture.","On the inventory page.","On the outside of the moving pad."], ans:['B'] },
+      { q: "What goes in the inventory line marked \"Item\"?", type:'single', opts:["Box size, or the piece of furniture.","Condition of the box or item.","Location of the packed box.","Only CP (Carrier Packed)"], ans:['A'] },
+      { q: "What goes in the inventory line marked \"Description\"?", type:'single', opts:["Size of the box.","\"Brand New\"","Value of the item.","An item's damage condition report or contents of the box."], ans:['D'] },
+      { q: "What must be done with any inventory forms before leaving the customer's residence?", type:'multi', opts:["Lead and Customer sign and date the bottom of each page.","Leave ALL inventory forms with the customer including originals.","Leave the inventory form in the truck with the shipment.","Give the customer the yellow or off colored carbon copy."], ans:['A','D'] },
+      { q: "If a dresser is scratched on the front right leg, how would you write out the pre-existing damage?", type:'written', opts:[], ans:[] },
+      { q: "How would you inventory a medium box packed by PDX Movers that is labeled cups, bowls, plates?", type:'written', opts:[], ans:[] },
+      { q: "Prior to inventorying a shipment, what should you instruct your packers to do once they finish packing and labeling each box?", type:'single', opts:["Carry them to the truck.","Stack them high and tight.","Neatly stack the boxes with labels facing out for an efficient inventory process.","Ask the customer where they would like each box."], ans:['C'] },
+      { q: "As a general rule, how many items should be tagged in the shipment?", type:'single', opts:["Some of them.","Only the ones the customer instructs you to tag.","Just the pretty ones.","All of them."], ans:['D'] },
+      { q: "When should you use more than one sticker on a single item?", type:'multi', opts:["When the item weighs more than 1,000 lbs.","Where the description of the item requires more than one line on the inventory.","When the item is of extremely high value or importance to the customer.","When a piece has disassembled and is now in multiple pieces."], ans:['B','D'] },
+      { q: "What should you keep an eye for when it comes to your pack team's labeling?", type:'single', opts:["Generic terms or \"no go items\"","Damaged company packed boxes.","Proper special handling instructions (TLO or Fragile)","Missing initials on the boxes.","All of the above."], ans:['E'] },
+      { q: "What does the acronym \"MCU\" stand for?", type:'single', opts:["Marvel Cinematic Universe.","Medical care unit.","Missing Contents Unknown.","Mechanical Condition Unknown."], ans:['C'] },
+      { q: "Where does PDX Movers ask you to put the 000 inventory sticker on your inventory sheet?", type:'single', opts:["On a box.","On the first page and first line of inventory — furthest to the right.","On your clipboard so it doesn't get lost.","Top left hand corner of the inventory page."], ans:['B'] },
+      { q: "Under usual circumstances, roughly how much \"weight\" is inventoried on each page of your inventory?", type:'single', opts:["1000 lbs","2000 lbs","2500 lbs","500 lbs"], ans:['C'] },
+      { q: "When inventorying crates, what should be notated on the description?", type:'single', opts:["Only the contents of the crate.","Contents and L x W x H of crate.","What kind of wood the crate is made from.","The weight of the crate."], ans:['B'] },
+      { q: "PBO (packed by owner) boxes should always have the item description \"CU\". What does this stand for?", type:'single', opts:["Carrier Unknown.","Crated Unknown.","Customer Unknown.","Contents Unknown."], ans:['D'] },
+      { q: "If you are to \"minus\" an item from the shipment that you have already inventoried, what is the process?", type:'written', opts:[], ans:[] },
+    ]
+  },
+  {
+    id: 'wr',
+    name: 'Wrapping',
+    short: 'Wrapping',
+    questions: [
+      { q: "What is the going standard when it comes to wrapping furniture at PDX Movers?", type:'single', opts:["We wrap everything!!!","We only wrap what is convenient.","We only wrap wood and glass items.","We only wrap fabric and metal items."], ans:['A'] },
+      { q: "Why must we wrap furniture?", type:'single', opts:["To protect peoples' items.","To avoid claims.","To make furniture easier to load.","To make moving safer.","All of the above."], ans:['E'] },
+      { q: "What is the first step to wrapping a piece of furniture?", type:'single', opts:["Shrink wrap it.","Cardboard wrap it.","Tape the drawers shut.","Inspect the piece for breakable drawer contents, or removable shelves, then lay out your base blanket."], ans:['D'] },
+      { q: "How would we go about wrapping a piece of furniture that has long skinny legs?", type:'single', opts:["Wrap the piece tightly around the legs with moving pads.","Shrink wrap around the legs first to make them stronger.","Partner lift the piece up and lay on its back to attempt to remove the legs. If they do not remove, only wrap tightly around the top and edge of piece.","Don't wrap it at all in hopes we can move the piece without breaking it."], ans:['C'] },
+      { q: "Why must we not wrap dining chair legs too tightly?", type:'single', opts:["Tightly wrapping skinny legs decreases the chances of breaking.","It's actually not a big deal.","Tightly wrapping around skinny legs could potentially cause them to break."], ans:['C'] },
+      { q: "How many Blue HHG Blankets should it take to fully wrap a couch?", type:'single', opts:["3-5.","1-2.","6-7.","8-9."], ans:['A'] },
+      { q: "How many blankets should it take to fully wrap a large 6 drawer dresser with Blue HHG Blankets?", type:'single', opts:["4-7.","1.","5-6.","2-4."], ans:['A'] },
+      { q: "On furniture that has glass built into it, what must we do to ensure that it stays protected?", type:'single', opts:["After blanket wrapping, cover where the glass was with cardboard, then shrink wrap it.","Shrink wrap it first, then blanket wrap, then cardboard wrap.","Cardboard wrap first, then shrink, then blanket wrap.","Just shrink wrap the piece, then cover the glass areas with cardboard."], ans:['A'] },
+      { q: "What should we do to make washers and dryers safe for transport?", type:'multi', opts:["Ask the customer to inspect the \"wrap job\" we just did.","Cover the glass, plexiglass, and electronic areas in additional cardboard on the outside of the blankets.","Arrange the cord on the back into a position where it is not damaging the machine, or sticking out.","Ratchet strap the lid shut."], ans:['B','C'] },
+      { q: "Why must we not shrink wrap directly to wood or leather furniture?", type:'single', opts:["Wood and leather tend to sweat and crack when cased in shrink wrap.","They tend to warp.","The shrink wrap can draw the paint or stain out.","All of the above."], ans:['D'] },
+      { q: "After we wrap a piece of furniture, what is the next step?", type:'single', opts:["Carry the load out to the truck.","Find a lifting partner.","Label the item with the location in which it was wrapped and what the item is.","Inventory the piece."], ans:['C'] },
+      { q: "What are your labeling requirements when wrapping a piece of furniture?", type:'single', opts:["What the wrapped item is / Location of where the item was wrapped at origin.","Customer name, location, contents, CP, Initials","Color of the wrapped item / name of the customer.","Floor in which the item was wrapped / Name of the mover who wrapped the item."], ans:['A'] },
+      { q: "When wrapping multiple table legs or shelves in the same moving pad, what must you do?", type:'single', opts:["Stack the legs or shelves together, no padding in between.","Fold a layer of moving pad between each piece so there is no direct contact.","Shrink wrap the wooden legs first.","Wrap the wood legs in cardboard first, then wrap them."], ans:['B'] },
+      { q: "What is the process for servicing a grandfather clock?", type:'single', opts:["Tightly wrap the clock in just cardboard.","Wrap the clock in just moving blankets.","Only use shrink wrap to wrap the clock.","Disassemble necessary components, blanket wrap, fully cardboard wrap, then shrink wrap."], ans:['D'] },
+      { q: "How many blankets should it take to fully wrap a computer chair including the legs and wheels?", type:'single', opts:["1","2","3","4"], ans:['B'] },
+      { q: "How should a china hutch be serviced?", type:'single', opts:["Shrink wrap everything, don't bother blanket wrapping.","Shrink wrap the piece, then cover the whole thing in cardboard.","Disassemble the necessary components, then blanket and shrink wrap.","Remove shelves and dowels, full blanket wrap, full cardboard wrap over glass areas, and shrink wrap."], ans:['D'] },
+      { q: "How would you go about wrapping a piece of furniture that has been inventoried?", type:'single', opts:["Remember the sticker number, and notate the sticker number on the OUTSIDE OF THE FINISHED WRAP.","Peel the sticker off the item and stick it on the outside of the wrap.","We don't need the sticker on the outside.","Use an additional sticker for the outside."], ans:['A'] },
+      { q: "A finished wrap should be:", type:'single', opts:["Tight, labeled, safe to carry, and professional looking.","Good enough to get to the truck.","Going standard is shrink wrap everything.","Just labeled and shrink wrapped."], ans:['A'] },
+      { q: "A dresser should not take more than 6 minutes to wrap. True or False?", type:'single', opts:["True","False"], ans:['A'] },
+      { q: "How long should it take to wrap a dining chair?", type:'single', opts:["1-2 Minutes.","3-5 Minutes.","6-8 Minutes.","9-10 Minutes."], ans:['A'] },
+    ]
+  },
+  {
+    id: 'mv',
+    name: 'Moving',
+    short: 'Moving',
+    questions: [
+      { q: "What are the 3 main types of house protection that we set up at every household?", type:'single', opts:["Door jam cover, red floor runners, stair step covers.","Door protector, red floor runners, door jam cover.","Door protector, door jam cover, cardboard the door step.","We only set it up if it's necessary."], ans:['B'] },
+      { q: "What additional type of house protection do we offer?", type:'multi', opts:["Rail guard protectors.","Carpet mask.","Plastic wall coverings.","Tarping."], ans:['A','B'] },
+      { q: "What degree of angle is best for 2 person lifting an object up or down a flight of stairs?", type:'single', opts:["25°","35°","45°","90°"], ans:['C'] },
+      { q: "Which direction should the back of a couch be facing when partner-lifting a couch through a doorway?", type:'single', opts:["Towards the ceiling.","Towards the floor.","Towards the right side of the door.","Towards the left side of the door."], ans:['A'] },
+      { q: "When using a hand truck, make sure to always keep the load:", type:'single', opts:["Behind you.","In front of you.","Uphill from you.","Wherever, it doesn't really matter."], ans:['C'] },
+      { q: "When should you ask for assistance when hand trucking a large object?", type:'single', opts:["Anytime you feel the load might be too heavy to handle on your own.","When the ramp is too slippery to get up solo.","When you are having trouble seeing the pathway.","All of the above."], ans:['D'] },
+      { q: "When hand trucking a load down stairs, the hand truck should be:", type:'single', opts:["In front of you.","Behind you.","We don't hand truck down stairs.","The direction doesn't matter."], ans:['B'] },
+      { q: "The appropriate way to \"set\" a 4 wheel dolly is to:", type:'multi', opts:["Hold the 4 wheel dolly under the piece with your foot for the 2 people lifting the item.","Tip the piece, and roll the dolly long ways under the piece and tip it up, then gently rock the piece back down.","One person holds the four wheel dolly in position as 2 people gently set the item on the dolly.","4 wheeled dollies are for moving blankets only."], ans:['B','C'] },
+      { q: "We must never roll a hand truck or 4 wheeled dolly on a household floor unless:", type:'single', opts:["There are red floor runners or carpet mask down.","The customer says it's ok.","The floors are already damaged.","The customer is not present."], ans:['A'] },
+      { q: "Shoulder dolly straps are great for lifting:", type:'single', opts:["Hot Tubs.","Larger items that are generally harder to pick up with just our hands.","700lb Gun safes.","PDX Movers do not use Shoulder Dollies."], ans:['B'] },
+      { q: "When partner lifting, what is crucial for a successful lift and carry?", type:'single', opts:["Clear pathway.","Communication (Ready, Set, Go Method)","Confidence.","All of the above."], ans:['D'] },
+      { q: "How can you test the weight of an object prior to lifting?", type:'single', opts:["Ask your lead how much the object weighs.","Tip a corner of the object.","Place the item on the customer's bathroom scale.","Ask the customer if the item is heavy."], ans:['B'] },
+      { q: "When a move involves an elevator, what is our goal when loading the elevator?", type:'multi', opts:["Fill the elevator to avoid making unnecessary trips.","Jump in the elevator to test the elevator's integrity.","Not to damage the inside of the elevator.","Let other people use our reserved elevator freely."], ans:['A','C'] },
+      { q: "What must you NEVER do in an elevator?", type:'single', opts:["Jump.","Lean items on the walls, mirrors, or buttons.","Slide, drag, or scoot items.","All of the above."], ans:['D'] },
+      { q: "Why must we not use hand trucks with \"slide rails\" attached on customer stairs?", type:'single', opts:["It looks unprofessional to use them.","At PDX Movers, we have to pick everything up.","It can ruin the hand truck.","They can damage customer staircases."], ans:['D'] },
+      { q: "When facing multiple staircases, it's sometimes best to \"split\" the stairs between the crew. True or False?", type:'single', opts:["True","False"], ans:['A'] },
+      { q: "What can we use to protect a home's staircase rails and banisters?", type:'single', opts:["Handrail covers.","Blankets.","Cardboard.","All of the above."], ans:['D'] },
+      { q: "It's important to know your limits when lifting. Dropping an item can lead to:", type:'single', opts:["Bodily injury.","Claims.","Upset customers.","All of the above."], ans:['D'] },
+      { q: "Just because you can lift a couch over your shoulders, does NOT mean you should. True or False?", type:'single', opts:["True","False"], ans:['A'] },
+      { q: "What MUST be done prior to any partner lift?", type:'single', opts:["Countdown.","Game plan.","Make sure the piece is wrapped.","All of the above."], ans:['D'] },
+    ]
+  },
+];
+const FALLBACK_TIMESTAMP = new Date().toISOString().slice(0,10);
 /* FALLBACK_END */
 
 let MODULES = [];
@@ -1946,24 +2213,6 @@ function adminAddQuestion() {
   document.getElementById('admin-edit-form').scrollIntoView({ behavior: 'smooth' });
 }
 
-async function adminPublish() {
-  if (!confirm('Push all current Sheet data to the live site?')) return;
-  const pw = prompt('Enter admin password:');
-  if (!pw) return;
-  setAdminStatus('Publishing…');
-  try {
-    const resp = await fetch(APPS_SCRIPT_URL + '?action=syncFallback&pw=' + encodeURIComponent(pw), { method: 'GET' });
-    const json = await resp.json();
-    if (json.status === 'ok') {
-      setAdminStatus('Published ✓ — live in ~60 seconds');
-    } else {
-      setAdminStatus('Publish failed: ' + (json.error || json.message || 'unknown'), true);
-    }
-  } catch(e) {
-    setAdminStatus('Network error — ' + e.message, true);
-  }
-}
-  
 function setAdminStatus(msg, isErr) {
   const el = document.getElementById('admin-status');
   el.textContent = msg;
